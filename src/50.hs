@@ -15,32 +15,26 @@
  -}
 module Main(euler50, main) where
 import Numbers
-import Data.List
+import Data.List(tails, maximumBy)
+import Data.Set(fromList, member)
 
-primes = takeWhile (<1000000) $ primesTME
+big = 1000000
+primes = takeWhile (<big) $ primesTME
+p_set = fromList primes
 
-findSeq nums p = filter (not . null) . map (\x-> findSeq' x [] 0) . tails $ nums where
-	findSeq' [] ys n
-		| n /= p = []
-		| otherwise = ys
-	findSeq' (x:xs) ys n
-		| x + n < p = findSeq' xs (x:ys) (x + n)
-		| x + n == p = (x:ys)
-		| otherwise = []
 
-findSeqCount nums p = maximum . map (\x -> findSeqCount' x 0 0) . tails . takeWhile (<p) $ nums where
-	findSeqCount' [] c n
-		| n /= p = 0
-		| otherwise = c + 1
-	findSeqCount' (x:xs) c n
-		| x + n < p = findSeqCount' xs (c+1) (x+n)
-		| x + n == p = c + 1
-		| otherwise = 0
+findPrimeSums _ [] = []
+findPrimeSums maxNum (x:xs) = findPrimeSums' 1 x xs where
+    findPrimeSums' c t [] = []
+    findPrimeSums' c t (x:xs)
+        | t + x > maxNum = []
+        | (member (t+x) p_set) = (t + x, c + 1): (findPrimeSums' (c+1) (t+x) xs)
+        | otherwise = findPrimeSums' (c+1) (t+x) xs
+    
+sorting (p,a) (q,b)
+    | a > b = GT
+    | a < b = LT
+    | a == b = compare p q
 
-sortBySeq (p,pc) (q,qc) 
-	| pc > qc = GT
-	| pc < qc = LT
-	| pc == qc = compare p q
-		
-euler50 = maximumBy sortBySeq . map (\x -> (x, findSeqCount primes x)) $ primes 
+euler50 = maximumBy sorting . concat . map (findPrimeSums big) . tails $ primes
 main = print euler50
