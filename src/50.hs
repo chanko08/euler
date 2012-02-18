@@ -23,11 +23,11 @@ primes = takeWhile (<big) $ primesTME
 p_set = fromList primes
 
 
-findPrimeSums _ [] = []
-findPrimeSums maxNum (x:xs) = findPrimeSums' 1 x xs where
+findPrimeSums [] = []
+findPrimeSums (x:xs) = findPrimeSums' 1 x xs where
     findPrimeSums' c t [] = []
     findPrimeSums' c t (x:xs)
-        | t + x > maxNum = []
+        | t + x > big = []
         | (member (t+x) p_set) = (t + x, c + 1): (findPrimeSums' (c+1) (t+x) xs)
         | otherwise = findPrimeSums' (c+1) (t+x) xs
     
@@ -36,5 +36,5 @@ sorting (p,a) (q,b)
     | a < b = LT
     | a == b = compare p q
 
-euler50 = maximumBy sorting . concat . map (findPrimeSums big) . tails $ primes
+euler50 = maximumBy sorting . concat . map findPrimeSums  . tails $ primes
 main = print euler50

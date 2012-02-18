@@ -36,7 +36,7 @@ def build(p):
         return
 
     #program hasn't been built yet, so make a generic starter file
-    contents = "module Main (main, euler%s) where\neuler%s = 0\nmain = print euler%s" % (p,p,p)
+    contents = "{-\n - Project Euler %s\n -}\nmodule Main (main, euler%s) where\neuler%s = 0\nmain = print euler%s" % (p,p,p,p)
     with open(src_path,"w") as f:
         f.write(contents)
 
