@@ -22,7 +22,7 @@ import os
 def make_all():
     print "making everything"
     d = "./src/"
-    files = [f[:-3] for f in os.listdir(d) if os.path.isfile(d+f) and f[-3:] == ".hs" and f[:-3].isdigit() ]
+    files = [f[:-3] for f in os.listdir(d) if os.path.isfile(d+f) and f.endswith(".hs") and f[:-3].isdigit() ]
 
     make(files)	
 
@@ -30,13 +30,13 @@ def build(p):
     print "building",p
 
     #first check that it doesn't exist already
-    src_path = "./src/%s.hs" % (p)
+    src_path = "./src/{0}.hs".format(p)
     if os.path.exists(src_path):
         print "already built"
         return
 
     #program hasn't been built yet, so make a generic starter file
-    contents = "{-\n - Project Euler %s\n -}\nmodule Main (main, euler%s) where\neuler%s = 0\nmain = print euler%s" % (p,p,p,p)
+    contents = "{{-\n - Project Euler {0}\n -}}\nmodule Main (main, euler{0}) where\neuler{0} = 0\nmain = print euler{0}\n".format(p)
     with open(src_path,"w") as f:
         f.write(contents)
 
@@ -46,7 +46,7 @@ def build(p):
 #compiles all programs in the list
 def make(prog_list):
     for p in prog_list:
-        cmd = "ghc --make src/%s.hs -outputdir=src/obj/%s -o bin/%s -i./lib:./src" % (p,p,p)
+        cmd = "ghc --make src/{0}.hs -outputdir=src/obj/{0} -o bin/{0} -i./lib:./src".format(p)
         print cmd
         os.system(cmd)
 
