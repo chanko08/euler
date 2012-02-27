@@ -1,4 +1,4 @@
-module Util (perm)
+module Util (perm, intToList, groupByDiag, groupByRow, groupByCol)
 where
 import Data.Char
 import Data.List
@@ -30,7 +30,9 @@ groupByDiag x y list = topSide matrix ++ leftSide matrix ++ topSide revMatrix ++
 groupByRow _ [] = []	
 groupByRow n xs = take n xs : groupByRow n (drop n xs)
 
---takes in a list, and group the elements in a column like sense, where
--- n is the number of elements per row here too
---TODO change so that n is number of elements per column
+{-
+ - takes in a list, and group the elements in a column like sense, where
+ - n is the number of elements per row here too
+ - TODO change so that n is number of elements per column
+ -}
 groupByCol n xs = transpose $ groupByRow n xs

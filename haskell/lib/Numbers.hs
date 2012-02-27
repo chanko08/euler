@@ -15,7 +15,7 @@ groupConsecDigits a xs = take a xs : groupConsecDigits a ys where
 --Test function for if a number is a palindromic number
 isPalindrome :: Int -> Bool
 isPalindrome x = y == reverse y where
-    y = (map digitToInt . show) $ x
+    y = show $ x
         
 
 
@@ -38,22 +38,20 @@ choose n k = choose (n-1) (k-1) * n `div` k
 --Functions related to prime numbers and divisibility
 --gets the prime factors of a number
 primeFactors 1 = []
-primeFactors n = p : primeFactors (n `div` p)
-	where
-		p = head $ filter evenly $ primesTME
-		evenly i = n `mod` i == 0
+primeFactors n = p : primeFactors (n `div` p) where
+    p = head $ filter evenly $ primesTME
+    evenly i = n `mod` i == 0
 
 --returns the number of divisors
 numDivisors n = product $ map ((1+) . length) $ group $ primeFactors n
 
 --lists the numbers that divide into a number
-factors n = 1 : n : (factor' n 2)
-	where
-		factor' n i
-			| i >= limit = []
-			| n `mod` i == 0 = i : (n `div` i) : (factor' n (i+1))
-			| otherwise = factor' n (i+1)
-		limit = floor(sqrt(fromInteger n)) + 1
+factors n = 1 : n : (factor' n 2) where
+    factor' n i
+        | i >= limit = []
+        | n `mod` i == 0 = i : (n `div` i) : (factor' n (i+1))
+        | otherwise = factor' n (i+1)
+    limit = floor(sqrt(fromInteger n)) + 1
 
 
 --Prime Sieves  
