@@ -10,13 +10,13 @@
  -
  - It can be seen that this sequence (starting at 13 and finishing at 1)
  - contains 10 terms. Although it has not been proved yet (Collatz Problem),
- - it is thought that all starting numbers finish at 1.
+ - it is thought that all starting numbers fish at 1.
  -
  - Which starting number, under one million, produces the longest chain?
  - 
  - NOTE: Once the chain starts the terms are allowed to go above one million.
  -}
-module Main (main, euler14, collatzNum)
+module Main (main, euler14)
 where
 import Data.List
 
@@ -25,15 +25,11 @@ import Data.List
 	to the compilation using ghc, otherwise this will just be balls slow.
 -}
 
-collatzNum 0 = 1
-collatzNum 1 = 1
-collatzNum n 
-	| even n = collatzNum (n `div` 2) + 1
-	| otherwise = collatzNum ((3*n+1) `div` 2) + 2
+collatz 1 = [1]
+collatz n 
+    | even n    = n : collatz (n `div` 2)
+    | otherwise = n : collatz (3 * n + 1)
 
-euler14 = fst $ maximumBy tupMax lens
-	where
-		lens = zip [500001,500003..1000000] (map collatzNum [500001,500003..1000000])
-		tupMax (a,b) (c,d) = compare b d
-
+euler14 = fst . maximum . zip (map (length . collatz) [10..1000000]) $ [10..1000000]
 main = print euler14
+
