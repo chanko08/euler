@@ -10,12 +10,12 @@
  - What is the millionth lexicographic permutation of the digits
  - 0, 1, 2, 3, 4, 5, 6, 7, 8 and 9?
  -}
-module Main (main,euler24)
+module Euler24 (euler24)
 where
 import Data.List
+import Util(perm)
 
-perm [x] = [[x]]
-perm xs = [x:y | x <- xs, y <- perm . delete x $ xs]
+euler24 n xs = perm xs !! (n - 1)
 
-euler24 = head . drop 999999 $ perm "0123456789"
-main = print euler24
+answer = euler24 1000000 "0123456789"
+

@@ -14,9 +14,9 @@
  - How many, not necessarily distinct, values of  nCr, for 1 ≤ n ≤ 100, are
  - greater than one-million?
  -}
-module Main (main, euler53) where
+module Euler53 (euler53) where
 
 import Numbers(choose)
 
 euler53 = length . filter (>=1000000) $ [choose x y | x <- [1..100], y <- [1..x]]
-main = print euler53
+answer = euler53

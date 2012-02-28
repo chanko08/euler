@@ -20,12 +20,12 @@
  - How many Sundays fell on the first of the month during the twentieth century
  - (1 Jan 1901 to 31 Dec 2000)?
  -}
-module Main (main,euler19)
+module Euler19 (euler19)
 where
 import Data.Time.Calendar
 import Data.Time.Calendar.WeekDate
 
-main = print euler19
-euler19 = length $ filter ( \(_,_,c) -> (c == 7) ) all_days
-	where
-		all_days = [ toWeekDate $ fromGregorian a b 1 | a <- [1901..2000], b <- [1..12]]
+euler19 = length $ filter ( \(_,_,c) -> (c == 7) ) all_days where
+    all_days = [ toWeekDate $ fromGregorian a b 1 | a <- [1901..2000], b <- [1..12]]
+
+answer = euler19

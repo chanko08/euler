@@ -9,10 +9,8 @@
  -
  - Find the sum of the digits in the number 100!
  -}
-module Main (euler20, main) where
-import EulerUtil
+module Euler20 (euler20) where
+import Util(intToList)
+import Numbers(fac)
 
-
-euler20 = (sum . intToList . fac) 100
-main = print euler20
-fac n = product [1..n]
+euler20 = sum . intToList . fac $ 100

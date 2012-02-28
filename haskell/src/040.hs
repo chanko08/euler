@@ -14,10 +14,10 @@
  - d1 × d10 × d100 × d1000 × d10000 × d100000 × d1000000
  -
  -}
-module Main (main, euler40) where
-import EulerUtil
+module Euler40 (euler40) where
+import Util(intToList)
 
-digitsList = foldr (\x y -> x++y) [] . map intToList $ [1..]
+digitsList = concatMap intToList [1..]
 
 euler40 = product . map (\x -> digitsList !! x) $ [0,9,99,999,9999,99999,999999] 
-main = print euler40
+answer = euler40

@@ -14,24 +14,13 @@
  - If the product of these four fractions is given in its lowest common terms,
  - find the value of the denominator.
  -}
-module Main (main, euler33) where
+module Euler33 (euler33) where
+import Data.Ratio
 
-dumb_simplify a b
-	| a `mod` 10 == b `div` 10 = (a `div` 10, b `mod` 10)
-	| otherwise = (a, b)
+dream a b = a%b == simplify a b where
+    simplify a b
+        | b `mod` 10 == 0 = 0 % 1
+        | a `mod` 10 == b `div` 10 = (a `div` 10) % (b `mod` 10)
+        | otherwise = 0 % 1
 
-dream :: (Integral a) => a -> a -> Bool
-dream a b = y/z == w/x && w /= y && x /=z && y/z  /= 1
-	where
-		(y,z) = (fromIntegral a, fromIntegral b)
-		(w,x) = (fromIntegral . fst $ ans, fromIntegral . snd $ ans)
-		ans = dumb_simplify a b 
-		
-
-
-euler33 = ((fst f) `div` g, (snd f) `div` g)
-	where 
-		f = foldl (\x y-> (fst x * fst y, snd x * snd y )) (1,1) [(a,b) | a <- [10..99], b <- [10..99], dream a b]
-		g = gcd (fst f) (snd f)
- 
-main = print euler33
+euler33 = denominator . product $ [a%b | a<-[10..99], b<-[10..99], a<b, dream a b] 

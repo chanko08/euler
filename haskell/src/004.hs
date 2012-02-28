@@ -6,8 +6,9 @@
  -
  - Find the largest palindrome made from the product of two 3-digit numbers.
  -}
-module Main (main, euler4) where
-import EulerUtil
+module Euler4 (euler4) where
+import Numbers(isPalindrome)
 
-euler4 = maximum $ filter (isPalindrome) $ [x*y | x<-[100..999], y<-[100..999]]
-main = print euler4
+euler4 n = maximum . filter isPalindrome $ [x*y | x<-nDigitNums, y<-nDigitNums] where
+    nDigitNums = [10^(n-1) .. (10^n)-1]
+answer = euler4 3

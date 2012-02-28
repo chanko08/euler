@@ -18,8 +18,7 @@
  -   
  - Find the sum of all 0 to 9 pandigital numbers with this property.
  -}
-module Main (main, euler43) where
-import EulerUtil
+module Euler43 (euler43) where
 import Data.List
 
 divides y x = x `rem` y == 0
@@ -31,16 +30,14 @@ nperm n xs = [x:y | x <-xs ,y <- nperm (n-1) . delete x $ xs ]
 
 digits = [0..9]
 
-soln = map listToInt $ soln' [17,13,11,7,5,3,2] (nperm 3 digits)
-	where
-		soln' [] ls = ls
-		soln' (x:xs) ls
-			| x == 17 = soln' xs (filterDiv $ ls)
-			| otherwise = soln' xs (filterDiv $ newls)
-			where
-				newls = [x:y | x <-digits, y<-ls, not $ elem x y]
-				filterDiv = filter (divides x . listToInt . take 3)
+soln = map listToInt $ soln' [17,13,11,7,5,3,2] (nperm 3 digits) where
+    soln' [] ls = ls
+    soln' (x:xs) ls
+        | x == 17 = soln' xs (filterDiv ls)
+        | otherwise = soln' xs (filterDiv newls) where
+            newls = [x:y | x <-digits, y<-ls, x `notElem` y]
+            filterDiv = filter (divides x . listToInt . take 3)
 
 
 euler43 = sum soln
-main = print euler43
+answer = euler43

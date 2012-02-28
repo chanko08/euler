@@ -14,10 +14,10 @@
  -
  - what is the value of D?
  -}
-module Main (main, euler43) where
+module Euler44 (euler44) where
 import Data.List
 
-pent_nums = map p [1..]
+pentNums = map p [1..]
 	where p x = (x*(3*x-1)) `div` 2
 
 nperm 1 xs = [[x] | x<-xs]
@@ -28,12 +28,10 @@ ncombo 1 xs = [[x] | x<-xs]
 ncombo n xs = [x:y | x<-xs, y <- ncombo (n-1) . filter(>x) $ xs]
 
 
-is_pent x = (floor(test) == ceiling(test)) && (floor(test) `mod` 6 == 0)
-	where test = (sqrt(24*fromIntegral(x)+1) + 1)
+isPent x = (floor test == ceiling test) && (floor test `mod` 6 == 0)
+	where test = sqrt(24*fromIntegral x + 1) + 1
 
-euler44 =diff . head . filter (is_pent . diff) . filter (is_pent . sum) . ncombo 2 . take 5000 $ pent_nums
-	where
-		diff (x:y:[])
-			| x <= y = y - x
-			| otherwise = x - y
-main = print euler43
+euler44 = diff . head . filter (isPent . diff) . filter (isPent . sum) . ncombo 2 . take 5000 $ pentNums
+    where diff (x:y:[])
+            | x <= y = y - x
+            | otherwise = x - y

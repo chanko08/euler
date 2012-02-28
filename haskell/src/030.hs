@@ -10,14 +10,14 @@
  - As 1 = 1^4 is not a sum it is not included.
  -
  - The sum of these numbers is 1634 + 8208 + 9474 = 19316.
- - F
- - ind the sum of all the numbers that can be written as the sum of
+ - 
+ - Find the sum of all the numbers that can be written as the sum of
  - fifth powers of their digits.
  -}
-module Main (main, euler30) where
-import EulerUtil
+module Euler30 (euler30) where
+import Util(intToList)
 
-sumPow p num = sum [a^p | a <-(intToList num)] 
+sumPow p num = sum [a^p | a <- intToList num] 
 
-euler30 = sum [a | a <-[1000..200000],  sumPow 5 a == a]
-main = print euler30
+euler30 n = sum [a | a <-[1000..200000],  sumPow n a == a]
+answer = euler30 5

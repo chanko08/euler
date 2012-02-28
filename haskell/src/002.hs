@@ -9,7 +9,7 @@
  - By considering the terms in the Fibonacci sequence whose values do not exceed
  - four million, find the sum of the even-valued terms.
  -}
-module Main (main, euler2) where
-import EulerUtil
-euler2 = sum $ filter (\x -> x `mod` 2 ==0) $ takeWhile (<4000000) fibs
-main = print euler2
+module Euler2 (main, euler2) where
+import Numbers(fibs, divides)
+euler2 limit = sum . filter (divides 2) . takeWhile (<limit) $ fibs
+answer = euler2 4000000

@@ -31,15 +31,15 @@
  - NOTE: Wording was modified slightly on 24 April 2007 to emphasise the
  - theoretical nature of Lychrel numbers.
  -}
-module Main (main, euler55) where
+module Euler55 (euler55) where
 
 isPalindrome x = show x == (reverse . show) x
 
-isLychrel x = null . filter isPalindrome $ isLychrel' 1 x where
+isLychrel x = not . any isPalindrome $ isLychrel' 1 x where
     isLychrel' i x
         | i == 50 = []
         | otherwise = newX : isLychrel' (i+1) newX where
             newX = x +  read ((reverse . show) x) ::Integer
 
 euler55 = length . filter isLychrel $ [1..10000]
-main = print euler55
+answer = euler55

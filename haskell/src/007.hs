@@ -6,8 +6,8 @@
  -
  - What is the 10 001st prime number?
  -}
-module Main (main, euler7) where
-import EulerUtil
+module Euler7 (euler7) where
+import Numbers(primesTME)
 
-euler7 = last $ take 10001 $ primesTME()
-main = print euler7
+euler7 n = primesTME !! (n-1)
+answer = euler7 10001

@@ -4,8 +4,9 @@
  - The prime factors of 13195 are 5, 7, 13 and 29. 
  - What is the largest prime factor of the number 600851475143 ?
  -}
-module Main (main, euler3) where
-import EulerUtil
+module Euler3 (euler3) where
+import Numbers(primesTME, divides)
 
-euler3 = head $ filter (\x -> 600851475143 `mod` x ==0) $ reverse $ takeWhile( <floor(sqrt(600851475143)) ) $ primesTME()
-main = print euler3
+euler3 n = head . filter (`divides` n) . reverse . takeWhile (< limit ) $ primesTME where
+    limit = floor . sqrt . fromIntegral $ n
+answer = euler3 600851475143

@@ -5,7 +5,7 @@
  -
  - Find the last ten digits of the series, 1^1 + 2^2 + 3^3 + ... + 1000^1000.
  -}
-module Main(main,euler48) where
+module Euler48 (euler48) where
 
-euler48 = reverse . take 10 . reverse . show . sum $ [x^x | x<-[1..1000]]
-main = print euler48
+euler48 n = reverse . take 10 . reverse . show . sum $ [x^x | x<-[1..n]]
+answer = euler48 1000

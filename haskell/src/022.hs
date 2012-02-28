@@ -13,15 +13,14 @@
  -
  - What is the total of all the name scores in the file?
  -}
-module Main (main,euler22,calcScore) where
+module Euler22 (euler22) where
 import Data.List
-import Maybe
+import Data.Maybe
 import Names
 
 letters = "aABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
-calcScore (rank,name) = rank * (sum  [a | c <- name, let a = (fromJust . elemIndex c) letters ])
+calcScore (rank,name) = rank * sum  [a | c <- name, let a = (fromJust . elemIndex c) letters ]
 
-euler22 = sum $ map calcScore $ zip [1..] (sort namelist)
-
-main = print euler22
+euler22 n = sum $ zipWith (curry calcScore) [1..] (sort n)
+answer = euler22 namelist

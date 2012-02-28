@@ -6,7 +6,9 @@
  -
  - Find the sum of all the multiples of 3 or 5 below 1000.
  -}
-module Main (main, euler1) where
-euler1 = sum [x | x <- [1 .. 999], (x `mod` 3 == 0) || (x `mod` 5 == 0)]
+module Euler1 (euler1) where
+import Numbers(divides)
 
-main = print euler1
+euler1 xs = sum . filter (\x -> divides 3 x || divides 5 x) $ xs
+
+answer = euler1 [1..999]

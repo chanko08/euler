@@ -12,16 +12,17 @@
  -
  - Find the next triangle number that is also pentagonal and hexagonal.
  -}
-module Main (main, euler45) where
+module Euler45 (euler45) where
 
 triNums = map tri [1..]
 	where tri n = n*(n+1) `div` 2
 
-isHex n = ceiling(t) == floor(t)
-	where t = (sqrt(8*fromIntegral(n) +1) + 1)/4
+isHex n = ceiling t == floor t
+	where t = (sqrt(8*fromIntegral n +1) + 1)/4
 
-isPent n = floor(t) == ceiling(t)
-	where t = (sqrt(24*fromIntegral(n) + 1) +1) / 6 
+isPent n = floor t == ceiling t
+	where t = (sqrt(24*fromIntegral n + 1) +1) / 6 
 
+--start after the 285th triangle number because that is in the example
 euler45 = head . filter isPent . filter isHex . drop 285 $ triNums 
-main = print euler45
+answer = euler45

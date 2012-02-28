@@ -16,7 +16,7 @@
  - 
  - NOTE: Once the chain starts the terms are allowed to go above one million.
  -}
-module Main (main, euler14)
+module Euler14 (euler14)
 where
 import Data.List
 
@@ -31,5 +31,5 @@ collatz n
     | otherwise = n : collatz (3 * n + 1)
 
 euler14 = fst . maximum . zip (map (length . collatz) [10..1000000]) $ [10..1000000]
-main = print euler14
+answer = euler14
 

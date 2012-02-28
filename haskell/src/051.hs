@@ -17,32 +17,31 @@
  -  necessarily adjacent digits) with the same digit, is part of an eight
  -  prime value family
  -}
-module Main (main, euler51) where
+module Euler51 (euler51) where
 import qualified Data.Set as Set
 import Data.List(tails)
 
 import Numbers(primesTME)
 import Util(perm)
 
-primes = takeWhile (<1000000) $ primesTME
+primes = takeWhile (<1000000) primesTME
 
-masks = Set.toList . Set.unions $ [make_masks x | x <-[5..6]]
+masks = Set.toList . Set.unions $ [makeMasks x | x <-[5..6]]
 
-make_masks x = Set.unions [make_masks' i | i <-[3..x-1]] where
-    make_masks' i = Set.fromList . perm . concat $ [ [1 | j <-[1..i]], [0 | j <- [1..(x-i)]] ]
+makeMasks x = Set.unions [makeMasks' i | i <-[3..x-1]] where
+    makeMasks' i = Set.fromList . perm . concat $ [ [1 | j <-[1..i]], [0 | j <- [1..(x-i)]] ]
 
-mask_match m p
+maskMatch m p
     | (length . show $ p) /= length m = False
-    | otherwise = all_eq $ map snd . filter (\(x,y) -> x == 1 ) $ zip m (show p)
+    | otherwise = allEq $ map snd . filter (\(x,y) -> x == 1 ) $ zip m (show p)
 
-all_eq (p:ps) = all (==p) ps where
+allEq (p:ps) = all (==p) ps
 
-
-families m ps =filter (\x -> (length x) > 7) . map check_equal . tails $ ps where
+families m ps =filter (\x -> length x > 7) . map check_equal . tails $ ps where
     check_equal [] = []
-    check_equal (p:ps) = p :( filter (mask_eq m p) $ ps)
+    check_equal (p:ps) = p : filter (maskEq m p) ps
 
-mask_eq m p q = all (\(x,y) -> x == y) . map snd . filter (\(x,y) -> x == 0) . zip m $ zip (show p) (show q)
+maskEq m p q = all (uncurry (==)) . map snd . filter (\(x,y) -> x == 0) . zip m $ zip (show p) (show q)
 
-euler51 = head . concat . map (\(m, ps) -> families m ps) . zip masks . map (\x -> filter (mask_match x) primes) $ masks
-main = print euler51
+euler51 = head . concat . zipWith families masks . map (\x -> filter (maskMatch x) primes) $ masks
+answer = euler51

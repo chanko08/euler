@@ -53,9 +53,9 @@
  -
  - How many hands does Player 1 win?
  -}
-module Main (main)
+module Euler54 (euler54)
 where
-import Maybe (fromJust)
+import Data.Maybe (fromJust)
 import Data.List (elemIndex, sort, group,nub)
 
 determineHand h = (handRank h, tiebreak) where
@@ -86,19 +86,20 @@ hasKind x hand = not . null . kind x $ hand
 ranks hand = reverse . sort . map fst $ hand
 suits hand = sort . map snd $ hand
 
-createHands s = map (\(x,y) -> (parseHand x, parseHand y)) $ rounds where
+createHands s = map formHands rounds where
     rounds = map (splitAt 5 . words) . lines $ s
-    parseHand cs =  map parseCard $ cs
+    parseHand =  map parseCard
     parseCard c = (parse allRanks . head $ c, parse allSuits . last $ c)
-    parse a r = fromJust . (flip elemIndex) a $ r
+    parse a r = fromJust . flip elemIndex a $ r
     allRanks = "23456789TJQKA"
     allSuits = "SCHD"
+    formHands (x,y) = (parseHand x, parseHand y)
 
 firstPlayerWon (p1,p2) = determineHand p1 > determineHand p2
 
 euler54 h = length . filter firstPlayerWon $ h
 
-main = do 
+answer = do 
     s <- readFile "poker.txt"
     let hands = createHands s
         result = euler54 hands

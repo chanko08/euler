@@ -7,12 +7,12 @@
  -
  - Note: as 1! = 1 and 2! = 2 are not sums they are not included.
  -}
-module Main (main, euler34) where
-import EulerUtil
+module Euler34 (euler34) where
+import Util(intToList)
+import Numbers(fac)
 
-fac n = product [1..n]
 faccish a =  ((a==) . sum . map fac .intToList) a 
 
 
-euler34 = sum [a |  a <- [3..50000], faccish a]
-main = print euler34
+euler34 = sum . filter faccish $ [3..50000]
+answer = euler34

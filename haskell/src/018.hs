@@ -32,21 +32,20 @@
  - triangle containing one-hundred rows; it cannot be solved by brute force,
  - and requires a clever method! ;o)
  -}
-module Main (euler18, main)
+module Euler18 (euler18)
 where
 
-combine [] _ = []
-combine (x:xs) (y1:y2:ys) = (x + max y1 y2) : (combine xs (y2:ys))
+combine [] _              = []
+combine (x:xs) (y1:y2:ys) = (x + max y1 y2) : combine xs (y2:ys)
 
 
-combineLists [x] = x
-combineLists (x1:x2:xs) = combineLists (l:xs) 
-	where
-		l = combine x2 x1
+combineLists [x]        = x
+combineLists (x1:x2:xs) = combineLists (l:xs) where
+    l = combine x2 x1
 
 
-euler18 =head $ combineLists $ reverse triangle
-main = print euler18
+euler18 triangle = head . combineLists . reverse $ triangle
+answer = euler18 triangle
 
 triangle = [[75]
 	,[95, 64]

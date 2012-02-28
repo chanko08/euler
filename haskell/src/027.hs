@@ -23,23 +23,20 @@
  - that produces the maximum number of primes for consecutive values of n,
  - starting with n = 0.
  -}
-module Main (main, euler27)
+module Euler27 (euler27)
 where
-import EulerUtil
+import Numbers(primesTME)
 
 
-consecPrimes (a, b) = consecPrimes' 0
-	where
-		consecPrimes' x
-			| (x^2 + a*x+b) `elem` primes = (x^2 + a*x + b) : consecPrimes' (x+1)
-			| otherwise = []
+consecPrimes (a, b) = consecPrimes' 0 where
+    consecPrimes' x
+        | (x^2 + a*x+b) `elem` primes = (x^2 + a*x + b) : consecPrimes' (x+1)
+        | otherwise = []
 
-primes = takeWhile (<2000) $ primesTME()
+primes = takeWhile (<2000) $ primesTME
 
-euler27 =(product . drop 1 . maximum) [[numP (a,b), a, b] | (a,b) <- search_space]
-	where
-		search_space = [(a,b) |  b<-primes, a<-[-999,-997..999], 2 < b, b < 1000, (1+a+b) `elem` primes]
-		numP = length . consecPrimes
+euler27 =(product . drop 1 . maximum) [[numP (a,b), a, b] | (a,b) <- search_space] where
+    search_space = [(a,b) |  b<-primes, a<-[-999,-997..999], 2 < b, b < 1000, (1+a+b) `elem` primes]
+    numP = length . consecPrimes
 
-main = print euler27
 

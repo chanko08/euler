@@ -7,8 +7,8 @@
  - Considering natural numbers of the form, ab, where a, b < 100, what is the
  - maximum digital sum?
  -}
-module Main (main, euler56) where
-import EulerUtil (intToList)
+module Euler56 ( euler56) where
+import Util (intToList)
 
 euler56 = maximum . map (sum . intToList) $ [a^b | a<-[1..100], b<-[1..100]]
-main = print euler56
+answer = euler56

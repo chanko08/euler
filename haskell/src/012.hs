@@ -20,11 +20,9 @@
  - What is the value of the first triangle number to have over five hundred 
  - divisors?
  -}
-module Main (main, euler12, test) where
-import EulerUtil
-
-euler12 = head $ filter (\x -> numDivisors x > 500) triangleNums
-test = head $ filter (\x -> (numDivisors x) > 5) triangleNums
-main = print euler12
+module Euler12 (euler12) where
+import Numbers(numDivisors, triangleNums)
 
 
+euler12 n = head . filter (\x -> numDivisors x > n) $ triangleNums
+answer = euler12 500

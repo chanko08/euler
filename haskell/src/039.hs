@@ -8,15 +8,20 @@
  - 
  - For which value of p ≤ 1000, is the number of solutions maximised?
  -}
-module Main (main, euler39) where
+module Euler39 (euler39) where
 import Data.List
-import qualified Data.Set as Set
+import Data.Set(toList, fromList)
 
-solns p = [x | x<-triples, sum x == p ]
-triples = (Set.toList . Set.fromList) $ [ sort [a,b,c] | n<-[1..99], m<-[n+1..100], k<-[1..50], let a = k*(m^2 - n^2), let b = k * 2 * m * n, let c = k*(m^2 + n^2), a+b+c <= 1000]
+solns p = [x | x<-toList . fromList $ triples, sum x == p ]
+triples = [ sort [a,b,c] | n<-[1..99], m<-[n+1..100], k<-[1..50], let a = f k m n, let b = g k m n, let c = h k m n, a+b+c <= 1000]
+    where
+        f k m n = k*(m^2 - n^2)
+        g k m n = 2*k*m*n
+        h k m n = k*(m^2 + n^2)
+    
 
 
-euler39 =maximum $ zip soln_list [1000,999..2]
-	where
-		soln_list = map (length . solns) $ [1000,999..2]
-main = print euler39
+euler39 =maximum $ zip solnList [1000,999..2] where
+    solnList = map (length . solns) [1000,999..2]
+
+answer = euler39

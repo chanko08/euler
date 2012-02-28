@@ -17,10 +17,10 @@
  -
  - How many routes are there through a 20×20 grid?
  -}
-module Main (main, euler15)
+module Euler15 (euler15)
 where
-import EulerUtil
+import Numbers(choose)
 
 -- Yay combinatorics!
-euler15 = 40 `choose` 20 
-main = print euler15
+euler15 n = (2*n) `choose` n 
+answer = euler15 20

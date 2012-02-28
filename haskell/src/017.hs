@@ -12,32 +12,31 @@
  - letters. The use of "and" when writing out numbers is in compliance with
  - British usage.
  -}
-module Main (main, euler17) where
+module Euler17 (euler17) where
+import Util(intToList)
+import Numbers(divides)
+
 
 ones = ["","one","two","three","four","five","six","seven","eight","nine"]
 
-special_nums = ["ten","eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen",
-	"eighteen","nineteen"]
+specialNums = ["ten","eleven","twelve","thirteen","fourteen","fifteen",
+    "sixteen","seventeen","eighteen","nineteen"]
 
-tens = ["","","twenty","thirty","forty","fifty","sixty","seventy","eighty","ninety"]
-
-intToDigits 0 = []
-intToDigits x = intToDigits (x `div` 10) ++ [x `mod` 10]
+tens = ["","","twenty","thirty","forty","fifty","sixty","seventy","eighty",
+    "ninety"]
 
 stringifyDigit x
-	| 0 == x = "" 
-	| 1 <= x && x < 10 = ones !! x
-	| 10 <= x && x < 20 = special_nums !! (last digits)
-	| 20 <= x && x < 100 = tens !! (head digits) ++ ones !! (last digits)
-	| x `mod` 100 == 0 = ones !! (head digits) ++ "hundred"
-	| 100 <= x && x < 1000 = ones !! (head digits) ++ "hundredand" ++ stringifyDigit (x `mod` 100)
-	| otherwise = "fuck"
+    | x == 1000            = "onethousand"
+	| 0 == x               = "" 
+	| 1 <= x && x < 10     = ones !! x
+	| 10 <= x && x < 20    = specialNums !! last digits
+	| 20 <= x && x < 100   = tens !! head digits ++ ones !! last digits
+	| divides 100 x        = ones !! head digits ++ "hundred"
+	| 100 <= x && x < 1000 = ones !! head digits ++ "hundredand" ++ stringifyDigit (x `mod` 100)
+	where digits = intToList x
 
-	where
-		digits = intToDigits x
+euler17 n
+    | n <= 1000 = sum . map (length . stringifyDigit) $ [1..n]
 
-euler17 = (sum . map length) nums
-	where
-		nums = "onethousand": ( map stringifyDigit $ [1..999])
+answer = euler17 1000
 
-main = print euler17

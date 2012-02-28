@@ -14,14 +14,14 @@
  -
  - Evaluate the sum of all the amicable numbers under 10000.
  -}
-module Main (main, euler21) where
+module Euler21 (euler21) where
 import Data.List
 import qualified Data.Set as Set
-import EulerUtil
+import Numbers(factors)
 
-d n = (sum . init . sort . factors) n 
+d = sum . init . sort . factors
 
-euler21 = sum $ map (\(a,b) -> a+b) $ Set.toList $ Set.fromList amicables
-	where
-		amicables = [(max a b, min a b) | a <- [1..10000], let b = d a, d b == a, a /= b]
-main = print euler21
+euler21 = sum . map (uncurry (+)) . Set.toList . Set.fromList $ amicables where
+    amicables = [(max a b, min a b) | a <- [1..10000], let b = d a, d b == a, a /= b]
+
+answers = euler21

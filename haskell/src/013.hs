@@ -5,11 +5,11 @@
  - see below for numbers
  -}
 
-module Main (main, euler13)
+module Euler13 (euler13)
 where
 
-euler13 = take 10 $ show $ sum nums
-main = print euler13
+answer = read euler13::Integer
+euler13 = take 10 . show . sum $ nums
 
 nums = [37107287533902102798797998220837590246510135740250,
 	46376937677490009712648124896970078050417018260538,

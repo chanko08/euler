@@ -22,8 +22,11 @@
  - 
  - What is the first term in the Fibonacci sequence to contain 1000 digits?
  -}
-module Main (main,euler25) where
-import EulerUtil
+module Euler25 (euler25) where
+import Util(intToList)
+import Numbers(fibs)
 
-euler25 = fst . last . takeWhile (\x -> (length . intToList . snd $ x) /= 1000) . zip [1..] $ fibs
-main = print euler25
+digitLength = length . intToList
+
+euler25 n = fst . head . dropWhile (\x -> (digitLength . snd $ x) < n ) . zip [0..] $ fibs
+answer = euler25 1000
